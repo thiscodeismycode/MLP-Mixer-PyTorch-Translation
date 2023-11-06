@@ -8,15 +8,17 @@ from mlp_mixer.train import train
 
 # hyperparameters
 num_classes = 10
-num_blocks = 4
+num_blocks = 2
 patch_size = 4
-hidden_dim = 8
-tokens_mlp_dim = 16
-channels_mlp_dim = 16
+hidden_dim = 16
+tokens_mlp_dim = 32
+channels_mlp_dim = 32
 
-batch_size = 16
-epochs = 10
+input_channels = 3  # RGB
+input_size = 32  # For CIFAR10
 
+batch_size = 8
+epochs = 15
 
 if __name__ == "__main__":
 
@@ -24,10 +26,12 @@ if __name__ == "__main__":
         torch.device('cuda')
         print('cuda')
 
-    model = MlpMixer(num_classes, num_blocks, patch_size, hidden_dim, tokens_mlp_dim, channels_mlp_dim)
+    model = MlpMixer(input_channels, input_size, num_classes,
+                     num_blocks, patch_size, hidden_dim, tokens_mlp_dim, channels_mlp_dim)
 
     train_loader, test_loader = load_data(batch_size)
     loss_fn = nn.CrossEntropyLoss()
-    optimizer = torch.optim.SGD(model.parameters(), lr=1e-3)
+    optimizer = torch.optim.SGD(model.parameters(), lr=1e-2)
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=15, T_mult=1, eta_min=1e-5)
 
-    train(model, train_loader, test_loader, loss_fn, optimizer, epochs)
+    train(model, train_loader, test_loader, loss_fn, optimizer, scheduler, epochs)

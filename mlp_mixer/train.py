@@ -9,22 +9,14 @@ def train_step(model, loss_fn, optimizer, train_loader):
     last_loss = 0.
 
     for i, data in enumerate(train_loader):
-        # Every data instance is an input + label pair
         inputs, labels = data
-        # Zero your gradients for every batch!
         optimizer.zero_grad()
-
-        # Make predictions for this batch
         outputs = model(inputs)
-
-        # Compute the loss and its gradients
         loss = loss_fn(outputs, labels)
         loss.backward()
 
-        # Adjust learning weights
         optimizer.step()
 
-        # Gather data and report
         running_loss += loss.item()
         if i % 1000 == 999:
             last_loss = running_loss / 1000
@@ -34,7 +26,7 @@ def train_step(model, loss_fn, optimizer, train_loader):
     return last_loss
 
 
-def train(model, train_loader, test_loader, loss_fn, optimizer, epochs):
+def train(model, train_loader, test_loader, loss_fn, optimizer, scheduler, epochs):
     epoch_number = 0
     best_val_loss = 1_000_000.
     start_time = time.time()
@@ -43,13 +35,11 @@ def train(model, train_loader, test_loader, loss_fn, optimizer, epochs):
     for epoch in range(epochs):
         print('EPOCH {}:'.format(epoch_number + 1))
 
-        # Make sure gradient tracking is on, and do a pass over the data
         model.train(True)
         avg_loss = train_step(model, loss_fn, optimizer, train_loader)
+        scheduler.step()
 
         running_val_loss = 0.0
-        # Set the model to evaluation mode, disabling dropout and using population
-        # statistics for batch normalization.
         model.eval()
 
         # Disable gradient computation and reduce memory consumption.
@@ -63,10 +53,9 @@ def train(model, train_loader, test_loader, loss_fn, optimizer, epochs):
         avg_val_loss = running_val_loss / (i + 1)
         print('LOSS train {0:0.4f} test {1:0.4f}'.format(avg_loss, avg_val_loss))
 
-        # Track the best performance, and save the model's state
         if avg_val_loss < best_val_loss:
             best_val_loss = avg_val_loss
-            model_path = 'model_{}_{}'.format(timestamp, epoch_number)
+            model_path = './models/model_{}_{}'.format(timestamp, epoch_number)
             torch.save(model.state_dict(), model_path)
 
         epoch_number += 1
