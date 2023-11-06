@@ -27,7 +27,7 @@ class MlpBlock(nn.Module):
 
 
 class MixerBlock(nn.Module):
-    def __init(self, tokens_mlp_dim, channels_mlp_dim):
+    def __init__(self, tokens_mlp_dim, channels_mlp_dim):
         super().__init__()
         self.tokens_mlp_dim: int = tokens_mlp_dim
         self.channels_mlp_dim: int = channels_mlp_dim

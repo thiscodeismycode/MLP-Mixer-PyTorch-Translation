@@ -1,10 +1,6 @@
 import torch
 import torch.nn as nn
-import torchvision
-import numpy as np
-import torchvision.transforms as transforms
 
-import mlp_mixer
 from mlp_mixer import MlpMixer
 from mlp_mixer.data import load_data
 from mlp_mixer.train import train
