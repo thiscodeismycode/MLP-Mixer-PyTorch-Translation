@@ -2,6 +2,7 @@
 import torch
 import time
 from datetime import datetime
+from torch.utils.tensorboard import SummaryWriter
 
 
 def train_step(model, loss_fn, optimizer, train_loader):
@@ -26,11 +27,12 @@ def train_step(model, loss_fn, optimizer, train_loader):
     return last_loss
 
 
-def train(model, train_loader, test_loader, loss_fn, optimizer, scheduler, epochs):
+def train(hypes, model, train_loader, test_loader, loss_fn, optimizer, scheduler, epochs):
     epoch_number = 0
     best_val_loss = 1_000_000.
     start_time = time.time()
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    writer = SummaryWriter(comment=' '.join(str(h) for h in hypes))
 
     for epoch in range(epochs):
         print('EPOCH {}:'.format(epoch_number + 1))
@@ -52,6 +54,8 @@ def train(model, train_loader, test_loader, loss_fn, optimizer, scheduler, epoch
 
         avg_val_loss = running_val_loss / (i + 1)
         print('LOSS train {0:0.4f} test {1:0.4f}'.format(avg_loss, avg_val_loss))
+        writer.add_scalars('Train vs val loss', {'Train': avg_loss, 'Val': avg_val_loss}, epoch_number+1)
+        writer.flush()
 
         if avg_val_loss < best_val_loss:
             best_val_loss = avg_val_loss

@@ -1,0 +1,10 @@
+---
+num_blocks: [2, 4, 6]
+patch_size: [4, 8]
+hidden_dim: [8, 16, 32]
+tokens_mlp_dim: [16, 32, 64]
+# channels_mlp_dim: [16, 32, 64]  # To reduce time, we'll assume tokens_mlp_dim == channels_mlp_dim
+batch_size: [8, 16, 32]
+# epochs: [15, 20, 25]  # To reduce time, we'll use epochs = 20 as default
+optimizer: ['SGD', 'Adam']
+init_lr: [1e-2, 1e-3]
