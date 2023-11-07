@@ -30,6 +30,7 @@ def train_step(model, loss_fn, optimizer, train_loader):
 def train(hypes, model, train_loader, test_loader, loss_fn, optimizer, scheduler, epochs):
     flag: bool = (hypes is not None)
     epoch_number = 0
+    patience = 0  # For early-stopping
     best_val_loss = 1_000_000.
     start_time = time.time()
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -40,6 +41,9 @@ def train(hypes, model, train_loader, test_loader, loss_fn, optimizer, scheduler
 
     for epoch in range(epochs):
         print('EPOCH {}:'.format(epoch_number + 1))
+
+        if patience > 1:
+            break
 
         model.train(True)
         avg_loss = train_step(model, loss_fn, optimizer, train_loader)
@@ -65,6 +69,9 @@ def train(hypes, model, train_loader, test_loader, loss_fn, optimizer, scheduler
             best_val_loss = avg_val_loss
             model_path = './models/model_{}_{}'.format(timestamp, epoch_number)
             torch.save(model.state_dict(), model_path)
+
+        else:
+            patience += 1
 
         epoch_number += 1
 

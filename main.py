@@ -49,6 +49,6 @@ if __name__ == "__main__":
         optimizer = torch.optim.SGD(model.parameters(), lr=init_lr, weight_decay=1e-3)
         if optimizer == 'Adam':
             optimizer = torch.optim.Adam(model.parameters(), lr=init_lr, weight_decay=1e-3)
-        scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=epochs, T_mult=1, eta_min=1e-4)
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=epochs, T_mult=1, eta_min=1e-3)
 
         train(None, model, train_loader, test_loader, loss_fn, optimizer, scheduler, epochs)
