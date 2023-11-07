@@ -5,7 +5,8 @@ import torchvision.transforms as transforms
 
 def load_data(batch_size):
     transform = transforms.Compose([transforms.ToTensor(),
-                                    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+                                    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+                                    transforms.RandomAffine(degrees=10, scale=(0.5, 2.))])
 
     train_set = torchvision.datasets.CIFAR10(root='./data', train=True, download=True, transform=transform)
     train_loader = torch.utils.data.DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=2)

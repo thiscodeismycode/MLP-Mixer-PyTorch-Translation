@@ -28,11 +28,15 @@ def train_step(model, loss_fn, optimizer, train_loader):
 
 
 def train(hypes, model, train_loader, test_loader, loss_fn, optimizer, scheduler, epochs):
+    flag: bool = (hypes is not None)
     epoch_number = 0
     best_val_loss = 1_000_000.
     start_time = time.time()
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-    writer = SummaryWriter(comment=' '.join(str(h) for h in hypes))
+    if flag is True:
+        writer = SummaryWriter(comment=' '.join(str(h) for h in hypes))
+    else:
+        writer = SummaryWriter()
 
     for epoch in range(epochs):
         print('EPOCH {}:'.format(epoch_number + 1))
