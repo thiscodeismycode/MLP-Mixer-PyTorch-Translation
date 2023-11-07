@@ -50,7 +50,8 @@ def train(hypes, model, train_loader, test_loader, loss_fn, optimizer, scheduler
         avg_loss = train_step(model, loss_fn, optimizer, train_loader)
         scheduler.step()
 
-        running_val_loss = 0.0
+        running_val_loss: float = 0.0
+        running_acc: int = 0
         model.eval()
 
         # Disable gradient computation and reduce memory consumption.
@@ -60,9 +61,12 @@ def train(hypes, model, train_loader, test_loader, loss_fn, optimizer, scheduler
                 val_outputs = model(val_inputs)
                 val_loss = loss_fn(val_outputs, val_labels)
                 running_val_loss += val_loss
+                running_acc += torch.sum(val_data == val_outputs)
 
         avg_val_loss = running_val_loss / (i + 1)
+        avg_acc = running_acc / (i + 1)
         print('LOSS train {0:0.4f} test {1:0.4f}'.format(avg_loss, avg_val_loss))
+        print('Test accuracy: %d' % avg_acc)
         writer.add_scalars('Train vs val loss', {'Train': avg_loss, 'Val': avg_val_loss}, epoch_number + 1)
         writer.flush()
 

@@ -13,8 +13,6 @@ input_channels = 3  # RGB
 input_size = 32  # CIFAR10 image size
 num_classes = 10
 
-epochs = 20  # To save time
-
 
 def hyperparameter_tuning(yaml_path):
     with open(yaml_path) as f:
@@ -32,13 +30,13 @@ def hyperparameter_tuning(yaml_path):
                     channels_mlp_dim = tokens_mlp_dim
                     for b_i in range(len(hypes["batch_size"])):
                         batch_size = int(hypes["batch_size"][b_i])
-                        for o_i in range(len(hypes["optimizer"])):
-                            optimizer = hypes["optimizer"][o_i]
+                        for e_i in range(len(hypes["epochs"])):
+                            epochs = int(hypes["epochs"][e_i])
                             for i_i in range(len(hypes["init_lr"])):
                                 init_lr = float(hypes["init_lr"][i_i])
 
                                 h = [num_blocks, patch_size, hidden_dim, tokens_mlp_dim, channels_mlp_dim,
-                                     batch_size, epochs, optimizer, init_lr]
+                                     batch_size, epochs, init_lr]
 
                                 model = MlpMixer(input_channels, input_size, num_classes,
                                                  num_blocks, patch_size, hidden_dim, tokens_mlp_dim,
@@ -47,11 +45,8 @@ def hyperparameter_tuning(yaml_path):
                                 train_loader, test_loader = load_data(batch_size)
                                 loss_fn = nn.CrossEntropyLoss()
 
-                                if optimizer == 'Adam':
-                                    optim = torch.optim.Adam(model.parameters(), lr=init_lr, weight_decay=1e-3)
-                                else:
-                                    optim = torch.optim.SGD(model.parameters(), lr=init_lr, weight_decay=1e-3)
+                                optim = torch.optim.SGD(model.parameters(), lr=init_lr, weight_decay=1e-3)
                                 scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optim, T_0=epochs,
-                                                                                                 T_mult=1, eta_min=1e-4)
+                                                                                                 eta_min=1e-4)
 
                                 train(h, model, train_loader, test_loader, loss_fn, optim, scheduler, epochs)

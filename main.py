@@ -9,15 +9,15 @@ from mlp_mixer.hype_search import hyperparameter_tuning
 
 
 # hyperparameters
-num_blocks = 2
-patch_size = 4
+num_blocks = 4
+patch_size = 8
 hidden_dim = 16
 tokens_mlp_dim = 32
 channels_mlp_dim = 32
-batch_size = 8
+batch_size = 16
 epochs = 15
 optimizer = 'SGD'
-init_lr = 1e-2
+init_lr = 0.075
 # NOT to change: for CIFAR10
 num_classes = 10
 input_channels = 3  # RGB
@@ -46,9 +46,7 @@ if __name__ == "__main__":
         train_loader, test_loader = load_data(batch_size)
         loss_fn = nn.CrossEntropyLoss()
 
-        optimizer = torch.optim.SGD(model.parameters(), lr=init_lr, weight_decay=1e-3)
-        if optimizer == 'Adam':
-            optimizer = torch.optim.Adam(model.parameters(), lr=init_lr, weight_decay=1e-3)
-        scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=epochs, T_mult=1, eta_min=1e-3)
+        optimizer = torch.optim.SGD(model.parameters(), lr=init_lr)
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=epochs, T_mult=1, eta_min=1e-4)
 
         train(None, model, train_loader, test_loader, loss_fn, optimizer, scheduler, epochs)
