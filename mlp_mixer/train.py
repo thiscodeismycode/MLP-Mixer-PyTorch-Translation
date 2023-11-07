@@ -43,6 +43,7 @@ def train(hypes, model, train_loader, test_loader, loss_fn, optimizer, scheduler
         print('EPOCH {}:'.format(epoch_number + 1))
 
         if patience > 1:
+            print("Early stopping at step: %d" % (epoch_number + 1))
             break
 
         model.train(True)
@@ -62,13 +63,14 @@ def train(hypes, model, train_loader, test_loader, loss_fn, optimizer, scheduler
 
         avg_val_loss = running_val_loss / (i + 1)
         print('LOSS train {0:0.4f} test {1:0.4f}'.format(avg_loss, avg_val_loss))
-        writer.add_scalars('Train vs val loss', {'Train': avg_loss, 'Val': avg_val_loss}, epoch_number+1)
+        writer.add_scalars('Train vs val loss', {'Train': avg_loss, 'Val': avg_val_loss}, epoch_number + 1)
         writer.flush()
 
         if avg_val_loss < best_val_loss:
             best_val_loss = avg_val_loss
             model_path = './models/model_{}_{}'.format(timestamp, epoch_number)
             torch.save(model.state_dict(), model_path)
+            patience = 0
 
         else:
             patience += 1

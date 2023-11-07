@@ -1,6 +1,5 @@
 # MLP-Mixer-experiments
-Intelligent Information studies Assignment 4<br>
-Based on [MLP Mixer](https://arxiv.org/abs/2105.01601)<br>
+Implementation based on [MLP Mixer](https://arxiv.org/abs/2105.01601)<br>
 
 ### Requirements
 ```shell
@@ -9,15 +8,23 @@ pip install -r requirements.txt
 
 ### Training
 To train from scratch:
-```shell
+```
 python3 main.py
 ```
 To execute hyperparameter search:
-```shell
-python3 main.py -e yes
+```
+./mlp_mixer.sh
+```
+Troubleshooting for 'Permission denied' error
+```
+chmod +x mlp_mixer.sh
+```
+Execute in the background with `nohup`
+```
+nohup ./mlp_mixer.sh > output.txt &
 ```
 Execute PyTorch TensorBoard:
-```shell
+```
 tensorboard --logdir=runs
 ```
 

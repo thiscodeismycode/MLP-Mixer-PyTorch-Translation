@@ -51,9 +51,7 @@ def hyperparameter_tuning(yaml_path):
                                     optim = torch.optim.Adam(model.parameters(), lr=init_lr, weight_decay=1e-3)
                                 else:
                                     optim = torch.optim.SGD(model.parameters(), lr=init_lr, weight_decay=1e-3)
-                                scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optim,
-                                                                                                 T_0=epochs,
-                                                                                                 T_mult=1,
-                                                                                                 eta_min=1e-4)
+                                scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optim, T_0=epochs,
+                                                                                                 T_mult=1, eta_min=1e-4)
 
                                 train(h, model, train_loader, test_loader, loss_fn, optim, scheduler, epochs)
