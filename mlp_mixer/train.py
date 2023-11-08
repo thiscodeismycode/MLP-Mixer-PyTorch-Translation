@@ -40,7 +40,7 @@ def train(hypes, model, train_loader, test_loader, loss_fn, optimizer, scheduler
     else:
         writer = SummaryWriter()
 
-    if os.path.isdir('./models'):
+    if os.path.isdir('./models') is False:
         print("Creating directory to store best models...")
         os.mkdir('./models')
 
@@ -73,6 +73,7 @@ def train(hypes, model, train_loader, test_loader, loss_fn, optimizer, scheduler
         print('LOSS train {0:0.4f} test {1:0.4f}'.format(avg_loss, avg_val_loss))
         print('Test accuracy:', avg_acc)
         writer.add_scalars('Train vs val loss', {'Train': avg_loss, 'Val': avg_val_loss}, epoch_number + 1)
+        writer.add_scalars('Accuracy', {'Test accuracy': avg_acc}, epoch_number + 1)
         writer.flush()
 
         if avg_val_loss < best_val_loss:

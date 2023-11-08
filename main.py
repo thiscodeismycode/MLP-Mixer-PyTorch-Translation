@@ -9,12 +9,12 @@ from mlp_mixer.hype_search import hyperparameter_tuning
 
 
 # hyperparameters
+batch_size = 16
 num_blocks = 16
 patch_size = 4
 hidden_dim = 16
 tokens_mlp_dim = 64
 channels_mlp_dim = 64
-batch_size = 16
 epochs = 30
 optimizer = 'SGD'
 init_lr = 0.075
