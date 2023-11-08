@@ -6,16 +6,17 @@ from mlp_mixer import MlpMixer
 from mlp_mixer.data import load_data
 from mlp_mixer.train import train
 from mlp_mixer.hype_search import hyperparameter_tuning
+from mlp_mixer.cosine_annealing_scheduler import CosineAnnealingWarmUpRestarts
 
 
-# hyperparameters
-batch_size = 16
-num_blocks = 16
+# hyperparameters based on Mixer-S
+batch_size = 512
+num_blocks = 8
 patch_size = 4
-hidden_dim = 16
-tokens_mlp_dim = 64
-channels_mlp_dim = 64
-epochs = 30
+hidden_dim = 512
+tokens_mlp_dim = 2048
+channels_mlp_dim = 256
+epochs = 100
 optimizer = 'SGD'
 init_lr = 0.075
 # NOT to change: for CIFAR10
