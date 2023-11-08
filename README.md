@@ -1,8 +1,8 @@
-# MLP-Mixer-experiments
+# MLP-Mixer PyTorch translation
 Implementation based on [MLP Mixer](https://arxiv.org/abs/2105.01601)<br>
 
 ### Requirements
-```shell
+```
 pip install -r requirements.txt
 ```
 
@@ -41,5 +41,4 @@ tensorboard --logdir=runs
 ```
 
 ### Acknowledgements
-[@rishikksh20](https://github.com/rishikksh20/MLP-Mixer-pytorch/tree/master)'s PyTorch implementation
-of MLP-Mixer was of great help.
+[@rishikksh20](https://github.com/rishikksh20/MLP-Mixer-pytorch/tree/master)'s PyTorch translation of MLP-Mixer was of great help.
