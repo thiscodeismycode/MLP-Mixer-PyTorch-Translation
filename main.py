@@ -9,7 +9,7 @@ from mlp_mixer.hype_search import hyperparameter_tuning
 
 
 # hyperparameters
-num_blocks = 8
+num_blocks = 16
 patch_size = 4
 hidden_dim = 16
 tokens_mlp_dim = 64
