@@ -1,7 +1,7 @@
 /data/
 /models/
 /runs/
-/output.txt
 /nohup.out
 /.idea/
-/out.txt
+
+*.txt
