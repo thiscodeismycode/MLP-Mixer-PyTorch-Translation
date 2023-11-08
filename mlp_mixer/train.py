@@ -1,4 +1,5 @@
 # Code reference: https://pytorch.org/tutorials/beginner/introyt/trainingyt.html
+import os
 import torch
 import time
 from datetime import datetime
@@ -38,6 +39,10 @@ def train(hypes, model, train_loader, test_loader, loss_fn, optimizer, scheduler
         writer = SummaryWriter(comment=' '.join(str(h) for h in hypes))
     else:
         writer = SummaryWriter()
+
+    if os.path.isdir('./models'):
+        print("Creating directory to store best models...")
+        os.mkdir('./models')
 
     for epoch in range(epochs):
         print('EPOCH {}:'.format(epoch_number + 1))
