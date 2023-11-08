@@ -9,13 +9,13 @@ from mlp_mixer.hype_search import hyperparameter_tuning
 
 
 # hyperparameters
-num_blocks = 4
-patch_size = 8
+num_blocks = 8
+patch_size = 4
 hidden_dim = 16
-tokens_mlp_dim = 32
-channels_mlp_dim = 32
+tokens_mlp_dim = 64
+channels_mlp_dim = 64
 batch_size = 16
-epochs = 15
+epochs = 30
 optimizer = 'SGD'
 init_lr = 0.075
 # NOT to change: for CIFAR10

@@ -42,7 +42,7 @@ def train(hypes, model, train_loader, test_loader, loss_fn, optimizer, scheduler
     for epoch in range(epochs):
         print('EPOCH {}:'.format(epoch_number + 1))
 
-        if patience > 1:
+        if patience > 2:
             print("Early stopping at step: %d" % (epoch_number + 1))
             break
 
@@ -51,22 +51,22 @@ def train(hypes, model, train_loader, test_loader, loss_fn, optimizer, scheduler
         scheduler.step()
 
         running_val_loss: float = 0.0
-        running_acc: int = 0
+        running_acc: float = 0.
         model.eval()
 
         # Disable gradient computation and reduce memory consumption.
         with torch.no_grad():
-            for i, val_data in enumerate(test_loader):
-                val_inputs, val_labels = val_data
+            for i, (val_inputs, val_labels) in enumerate(test_loader):
                 val_outputs = model(val_inputs)
                 val_loss = loss_fn(val_outputs, val_labels)
                 running_val_loss += val_loss
-                running_acc += torch.sum(val_data == val_outputs)
+                predicted_labels = torch.argmax(val_outputs, dim=1)
+                running_acc += torch.sum(torch.eq(val_labels, predicted_labels)).item() / 16
 
         avg_val_loss = running_val_loss / (i + 1)
         avg_acc = running_acc / (i + 1)
         print('LOSS train {0:0.4f} test {1:0.4f}'.format(avg_loss, avg_val_loss))
-        print('Test accuracy: %d' % avg_acc)
+        print('Test accuracy:', avg_acc)
         writer.add_scalars('Train vs val loss', {'Train': avg_loss, 'Val': avg_val_loss}, epoch_number + 1)
         writer.flush()
 
