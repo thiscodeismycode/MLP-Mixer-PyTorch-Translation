@@ -46,7 +46,7 @@ class MixerBlock(nn.Module):
         )
         self.channel_mixing = nn.Sequential(
             nn.LayerNorm(hidden_dim),
-            MlpBlock(hidden_dim, channels_mlp_dim)
+            MlpBlock(hidden_dim, channels_mlp_dim, dropout)
         )
 
     def forward(self, x):
