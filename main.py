@@ -10,16 +10,16 @@ from mlp_mixer.cosine_annealing_scheduler import CosineAnnealingWarmUpRestarts
 
 
 # hyperparameters based on Mixer-S
-batch_size = 512
+batch_size = 32         # batch_size = 512 in the paper, but TOO LARGE for CIFAR10 dataset
 num_blocks = 8
 patch_size = 4
-hidden_dim = 128        # hidden_dim = 512 in the paper, but TOO LARGE for CIFAR10 dataset
-tokens_mlp_dim = 256    # tokens_mlp_dim = 2048 in the paper, but TOO LARGE for CIFAR10 dataset
-channels_mlp_dim = 256
-epochs = 100
+hidden_dim = 32         # hidden_dim = 512 in the paper, but TOO LARGE for CIFAR10 dataset
+tokens_mlp_dim = 64     # tokens_mlp_dim = 256 in the paper, but TOO LARGE for CIFAR10 dataset
+channels_mlp_dim = 128   # channels_mlp_dim = 2048 in the paper, but TOO LARGE for CIFAR10 dataset
+epochs = 10
 optimizer = 'SGD'
-init_lr = 0.075
-dropout = 0.1
+init_lr = 0.08
+dropout = 0.3
 # NOT to change: for CIFAR10
 num_classes = 10
 input_channels = 3  # RGB
@@ -48,8 +48,9 @@ if __name__ == "__main__":
         train_loader, test_loader = load_data(batch_size)
         loss_fn = nn.CrossEntropyLoss()
 
-        optimizer = torch.optim.SGD(model.parameters(), lr=1e-4)
-        # scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=epochs, T_mult=1, eta_min=1e-4)
-        scheduler = CosineAnnealingWarmUpRestarts(optimizer, T_0=epochs, T_mult=1, eta_max=init_lr)
+        optimizer = torch.optim.SGD(model.parameters(), lr=init_lr)
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=epochs//2,
+                                                                         T_mult=1, eta_min=5e-3)
+        # scheduler = CosineAnnealingWarmUpRestarts(optimizer, T_0=epochs//2, T_mult=1, eta_max=init_lr, T_up=5, gamma=0.5)
 
         train(None, model, train_loader, test_loader, batch_size, loss_fn, optimizer, scheduler, epochs)

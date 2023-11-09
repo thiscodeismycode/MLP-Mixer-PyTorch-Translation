@@ -35,6 +35,7 @@ def train(hypes, model, train_loader, test_loader, batch_size, loss_fn, optimize
     epoch_number = 0
     patience = 0  # For early-stopping
     best_val_loss = 1_000_000.
+    prev_val_loss: float = 0
     start_time = time.time()
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
     if flag is True:
@@ -82,11 +83,14 @@ def train(hypes, model, train_loader, test_loader, batch_size, loss_fn, optimize
             best_val_loss = avg_val_loss
             model_path = './models/model_{}_{}'.format(timestamp, epoch_number)
             torch.save(model.state_dict(), model_path)
+
+        if avg_val_loss < prev_val_loss:
             patience = 0
 
         else:
             patience += 1
 
+        prev_val_loss = avg_val_loss
         epoch_number += 1
 
     end_time = time.time()
