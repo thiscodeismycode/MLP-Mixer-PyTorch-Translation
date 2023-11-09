@@ -13,8 +13,8 @@ from mlp_mixer.cosine_annealing_scheduler import CosineAnnealingWarmUpRestarts
 batch_size = 512
 num_blocks = 8
 patch_size = 4
-hidden_dim = 512
-tokens_mlp_dim = 2048
+hidden_dim = 128        # hidden_dim = 512 in the paper, but TOO LARGE for CIFAR10 dataset
+tokens_mlp_dim = 256    # tokens_mlp_dim = 2048 in the paper, but TOO LARGE for CIFAR10 dataset
 channels_mlp_dim = 256
 epochs = 100
 optimizer = 'SGD'
@@ -52,4 +52,4 @@ if __name__ == "__main__":
         # scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=epochs, T_mult=1, eta_min=1e-4)
         scheduler = CosineAnnealingWarmUpRestarts(optimizer, T_0=epochs, T_mult=1, eta_max=init_lr)
 
-        train(None, model, train_loader, test_loader, loss_fn, optimizer, scheduler, epochs)
+        train(None, model, train_loader, test_loader, batch_size, loss_fn, optimizer, scheduler, epochs)

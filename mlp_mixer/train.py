@@ -30,7 +30,7 @@ def train_step(model, loss_fn, optimizer, train_loader):
     return last_loss
 
 
-def train(hypes, model, train_loader, test_loader, loss_fn, optimizer, scheduler, epochs):
+def train(hypes, model, train_loader, test_loader, batch_size, loss_fn, optimizer, scheduler, epochs):
     flag: bool = (hypes is not None)
     epoch_number = 0
     patience = 0  # For early-stopping
@@ -68,7 +68,7 @@ def train(hypes, model, train_loader, test_loader, loss_fn, optimizer, scheduler
                 val_loss = loss_fn(val_outputs, val_labels)
                 running_val_loss += val_loss
                 predicted_labels = torch.argmax(val_outputs, dim=1)
-                running_acc += torch.sum(torch.eq(val_labels, predicted_labels)).item() / 16
+                running_acc += torch.sum(torch.eq(val_labels, predicted_labels)).item() / batch_size
 
         avg_val_loss = running_val_loss / (i + 1)
         avg_acc = running_acc / (i + 1)

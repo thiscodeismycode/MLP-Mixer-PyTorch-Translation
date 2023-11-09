@@ -14,6 +14,7 @@ input_size = 32  # CIFAR10 image size
 num_classes = 10
 
 
+# TODO
 def hyperparameter_tuning(yaml_path):
     with open(yaml_path) as f:
         hypes = yaml.load(f, Loader=yaml.FullLoader)
@@ -49,4 +50,4 @@ def hyperparameter_tuning(yaml_path):
                                 scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optim, T_0=epochs,
                                                                                                  eta_min=1e-4)
 
-                                train(h, model, train_loader, test_loader, loss_fn, optim, scheduler, epochs)
+                                train(h, model, train_loader, test_loader, batch_size, loss_fn, optim, scheduler, epochs)
