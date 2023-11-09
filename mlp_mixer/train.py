@@ -16,13 +16,15 @@ def train_step(model, loss_fn, optimizer, train_loader):
         outputs = model(inputs)
         loss = loss_fn(outputs, labels)
         loss.backward()
+        # gradient clipping with global norm 1
+        torch.nn.utils.clip_grad_norm_(model.parameters(), 1)
 
         optimizer.step()
 
         running_loss += loss.item()
         if i % 1000 == 999:
             last_loss = running_loss / 1000
-            print('  batch {0} loss: {1:0.4f}'.format(i + 1, last_loss))
+            print(' batch {0} loss: {1:0.4f}'.format(i + 1, last_loss))
             running_loss = 0.
 
     return last_loss
