@@ -35,7 +35,7 @@ python3 main.py -y 1
 
 Execute training in the background
 ```
-nohup ./mlp_mixer.sh > output.txt &
+nohup python3 main.py > output.txt &
 ```
 Execute PyTorch TensorBoard:
 ```
