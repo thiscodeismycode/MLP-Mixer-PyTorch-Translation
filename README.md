@@ -54,5 +54,5 @@ tensorboard --logdir=runs
 }
 ```
 
-### Acknowledgements
+## Acknowledgements
 [@rishikksh20](https://github.com/rishikksh20/MLP-Mixer-pytorch/tree/master)'s PyTorch translation of MLP-Mixer was of great help.
