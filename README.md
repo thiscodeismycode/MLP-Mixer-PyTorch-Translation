@@ -20,19 +20,18 @@ Replace the capitalized words with your own arguments. All arguments are optiona
 ```
 python3 main.py -b BATCH_SIZE -n NUM_BLOCKS -p PATCH_SIZE -d HIDDEN_DIM -t TOKENS_MLP_DIM -c CHANNELS_MLP_DIM -l LEARNING_RATE
 ```
-**Hyperparameter tuning**
+**Hyperparameter search**
+
+This will take some time... proportionally to the number of  hyperparameters you are testing with.
+<br> Search result would be saved as `hype_search.yaml`.
+<br>⚠ All cases are tested with only 5 epochs to save time. Results may be incorrect.
 1. Change the given `hyperparameter.yaml` file, or write your own.
-2. Execute training with '-y' or '--hype' and give "yes" as its argument input
-3. Or execute the given shell file, `mlp_mixer.sh`
+2. Execute training with '-y' or '--hype' and give a positive number as argument input.
 ```
-python3 main.py -y yes
-
- or
-
-./mlp_mixer.sh
+python3 main.py -y 1
 ```
 
-**+ Some tips**
+**+ Some extra tips**
 
 Execute training in the background
 ```

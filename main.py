@@ -19,7 +19,7 @@ input_size = 32  # CIFAR10 image size
 # Add parsers
 parser = argparse.ArgumentParser(prog='MLP Mixer pytorch translation', description='Provide options',
                                  epilog='All arguments are optional.')
-parser.add_argument('-y', '--hype', type=str, required=False, help='Type "yes" for hyperparameter search')
+parser.add_argument('-y', '--hype', choices=[0, 1], type=int, required=False, default=0, help='Execute hyperparameter search')
 parser.add_argument('-b', '--batch_size', type=int, required=False, default=32, help='Batch size')
 parser.add_argument('-n', '--num_blocks', type=int, required=False, default=8, help='Number of MLP blocks')
 parser.add_argument('-p', '--patch_size', type=int, required=False, default=4, help='Image patch size')
@@ -47,7 +47,7 @@ if __name__ == "__main__":
         torch.device('cuda')
         print('cuda')
 
-    if hype == 'yes':
+    if hype > 0:
         hyperparameter_tuning('hyperparameter.yaml')
 
     else:

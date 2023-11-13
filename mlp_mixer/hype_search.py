@@ -15,6 +15,8 @@ epochs = 5
 
 
 def hyperparameter_tuning(yaml_path):
+    print("Starting hyperparameter search!")
+
     with open(yaml_path) as f:
         hypes = yaml.load(f, Loader=yaml.FullLoader)
     f.close()

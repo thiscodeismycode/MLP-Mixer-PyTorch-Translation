@@ -3,6 +3,6 @@ patch_size: [4]
 num_blocks: [2, 4]
 hidden_dim: [8, 16, 32]
 tokens_mlp_dim: [16, 32, 64]
-channels_mlp_dim: [16, 32, 64]  # To reduce time, we'll assume channels_mlp_dim = tokens_mlp_dim
+channels_mlp_dim: [16, 32, 64]
 batch_size: [16, 32]
-init_lr: [0.05, 0.075, 0.1]  # To reduce time.......
+init_lr: [0.05, 0.075, 0.1]
