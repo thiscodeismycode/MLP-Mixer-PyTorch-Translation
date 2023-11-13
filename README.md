@@ -3,24 +3,24 @@ Implementation based on [MLP Mixer](https://arxiv.org/abs/2105.01601)<br>
 Pure translation without any structural changes.<br>
 ⚠ Dataloaders and default hyperparameters are set to load and train on _CIFAR10 dataset_.
 
-### Requirements
+## Requirements
 ```
 pip install -r requirements.txt
 ```
 
-### Training
-**Train with default options**
+## Training
+### Train with default options
 ```
 python3 main.py
 ```
-**Train with customized options**
+### Train with customized options
 
 Replace the capitalized words with your own arguments. All arguments are optional, thus not necessary.
 </br> Execute `python3 main.py -h` for details.
 ```
 python3 main.py -b BATCH_SIZE -n NUM_BLOCKS -p PATCH_SIZE -d HIDDEN_DIM -t TOKENS_MLP_DIM -c CHANNELS_MLP_DIM -l LEARNING_RATE
 ```
-**Hyperparameter search**
+### Hyperparameter search
 
 This will take some time... proportionally to the number of  hyperparameters you are testing with.
 <br> Search result would be saved as `hype_search.yaml`.
@@ -31,7 +31,7 @@ This will take some time... proportionally to the number of  hyperparameters you
 python3 main.py -y 1
 ```
 
-**+ Some extra tips**
+### + Some extra tips
 
 Execute training in the background
 ```
@@ -42,7 +42,7 @@ Execute PyTorch TensorBoard:
 tensorboard --logdir=runs
 ```
 
-### Citation
+## Citation
 ```
 @misc{tolstikhin2021mlpmixer,
       title={MLP-Mixer: An all-MLP Architecture for Vision}, 

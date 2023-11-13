@@ -3,6 +3,7 @@
 /runs/
 /nohup.out
 /.idea/
+/hype_search.yaml
 
 *.txt
-/hype_search.yaml
+!requirements.txt
