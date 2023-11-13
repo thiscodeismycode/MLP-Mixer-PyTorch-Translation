@@ -1,5 +1,7 @@
 # MLP-Mixer PyTorch translation
 Implementation based on [MLP Mixer](https://arxiv.org/abs/2105.01601)<br>
+Pure translation without any structural changes.<br>
+⚠ Dataloaders and default hyperparameters are set to load and train on _CIFAR10 dataset_.
 
 ### Requirements
 ```
@@ -7,19 +9,32 @@ pip install -r requirements.txt
 ```
 
 ### Training
-To train from scratch:
+**Train with default options**
 ```
 python3 main.py
 ```
-To execute hyperparameter search:
+**Train with customized options**
+
+Replace the capitalized words with your own arguments. All arguments are optional, thus not necessary.
+</br> Execute `python3 main.py -h` for details.
 ```
+python3 main.py -b BATCH_SIZE -n NUM_BLOCKS -p PATCH_SIZE -d HIDDEN_DIM -t TOKENS_MLP_DIM -c CHANNELS_MLP_DIM -l LEARNING_RATE
+```
+**Hyperparameter tuning**
+1. Change the given `hyperparameter.yaml` file, or write your own.
+2. Execute training with '-y' or '--hype' and give "yes" as its argument input
+3. Or execute the given shell file, `mlp_mixer.sh`
+```
+python3 main.py -y yes
+
+ or
+
 ./mlp_mixer.sh
 ```
-Troubleshooting for 'Permission denied' error
-```
-chmod +x mlp_mixer.sh
-```
-Execute in the background with `nohup`
+
+**+ Some tips**
+
+Execute training in the background
 ```
 nohup ./mlp_mixer.sh > output.txt &
 ```
@@ -28,7 +43,7 @@ Execute PyTorch TensorBoard:
 tensorboard --logdir=runs
 ```
 
-### Citations
+### Citation
 ```
 @misc{tolstikhin2021mlpmixer,
       title={MLP-Mixer: An all-MLP Architecture for Vision}, 

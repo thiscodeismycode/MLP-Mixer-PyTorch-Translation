@@ -95,3 +95,6 @@ def train(hypes, model, train_loader, test_loader, batch_size, loss_fn, optimize
 
     end_time = time.time()
     print("Elapsed time:", end_time - start_time)
+
+    # Return final loss value
+    return avg_val_loss

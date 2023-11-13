@@ -9,16 +9,7 @@ from mlp_mixer.hype_search import hyperparameter_tuning
 from mlp_mixer.cosine_annealing_scheduler import CosineAnnealingWarmUpRestarts
 
 
-# hyperparameters based on Mixer-S
-batch_size = 32         # batch_size = 512 in the paper, but TOO LARGE for CIFAR10 dataset
-num_blocks = 8
-patch_size = 4
-hidden_dim = 32         # hidden_dim = 512 in the paper, but TOO LARGE for CIFAR10 dataset
-tokens_mlp_dim = 64     # tokens_mlp_dim = 256 in the paper, but TOO LARGE for CIFAR10 dataset
-channels_mlp_dim = 128   # channels_mlp_dim = 2048 in the paper, but TOO LARGE for CIFAR10 dataset
-epochs = 10
 optimizer = 'SGD'
-init_lr = 0.08
 dropout = 0.3
 # NOT to change: for CIFAR10
 num_classes = 10
@@ -26,10 +17,28 @@ input_channels = 3  # RGB
 input_size = 32  # CIFAR10 image size
 
 # Add parsers
-parser = argparse.ArgumentParser(description='Evolution?', argument_default="no")
-parser.add_argument('-e', '--evol', type=str, required=False, help='Type "yes" for evolution')
+parser = argparse.ArgumentParser(prog='MLP Mixer pytorch translation', description='Provide options',
+                                 epilog='All arguments are optional.')
+parser.add_argument('-y', '--hype', type=str, required=False, help='Type "yes" for hyperparameter search')
+parser.add_argument('-b', '--batch_size', type=int, required=False, default=32, help='Batch size')
+parser.add_argument('-n', '--num_blocks', type=int, required=False, default=8, help='Number of MLP blocks')
+parser.add_argument('-p', '--patch_size', type=int, required=False, default=4, help='Image patch size')
+parser.add_argument('-d', '--hidden_dim', type=int, required=False, default=32, help='Hidden dimension')
+parser.add_argument('-t', '--tokens_mlp_dim', type=int, required=False, default=64, help='Token mixer dimension')
+parser.add_argument('-c', '--channels_mlp_dim', type=int, required=False, default=128, help='Channel mixer dimension')
+parser.add_argument('-l', '--learning_rate', type=float, required=False, default=0.08, help='Learning rate')
+parser.add_argument('-e', '--epochs', type=int, required=False, default=50, help="Training epochs")
 
-evol = parser.parse_args().evol
+args = parser.parse_args()
+hype = args.hype
+batch_size = args.batch_size
+num_blocks = args.num_blocks
+patch_size = args.patch_size
+hidden_dim = args.hidden_dim
+tokens_mlp_dim = args.tokens_mlp_dim
+channels_mlp_dim = args.channels_mlp_dim
+init_lr = args.learning_rate
+epochs = args.epochs
 
 
 if __name__ == "__main__":
@@ -38,7 +47,7 @@ if __name__ == "__main__":
         torch.device('cuda')
         print('cuda')
 
-    if evol == 'yes':
+    if hype == 'yes':
         hyperparameter_tuning('hyperparameter.yaml')
 
     else:
