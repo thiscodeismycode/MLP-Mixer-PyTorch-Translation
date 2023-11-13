@@ -18,7 +18,7 @@ python3 main.py
 Replace the capitalized words with your own arguments. All arguments are optional, thus not necessary.
 </br> Execute `python3 main.py -h` for details.
 ```
-python3 main.py -b BATCH_SIZE -n NUM_BLOCKS -p PATCH_SIZE -d HIDDEN_DIM -t TOKENS_MLP_DIM -c CHANNELS_MLP_DIM -l LEARNING_RATE
+python3 main.py -b BATCH_SIZE -p PATCH_SIZE -n NUM_BLOCKS -d HIDDEN_DIM -t TOKENS_MLP_DIM -c CHANNELS_MLP_DIM -r DROPOUT -l LEARNING_RATE -e EPOCHS
 ```
 ### Hyperparameter search
 

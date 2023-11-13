@@ -10,7 +10,6 @@ from mlp_mixer.cosine_annealing_scheduler import CosineAnnealingWarmUpRestarts
 
 
 optimizer = 'SGD'
-dropout = 0.3
 # NOT to change: for CIFAR10
 num_classes = 10
 input_channels = 3  # RGB
@@ -21,23 +20,25 @@ parser = argparse.ArgumentParser(prog='MLP Mixer pytorch translation', descripti
                                  epilog='All arguments are optional.')
 parser.add_argument('-y', '--hype', choices=[0, 1], type=int, required=False, default=0, help='Execute hyperparameter search')
 parser.add_argument('-b', '--batch_size', type=int, required=False, default=32, help='Batch size')
-parser.add_argument('-n', '--num_blocks', type=int, required=False, default=8, help='Number of MLP blocks')
 parser.add_argument('-p', '--patch_size', type=int, required=False, default=4, help='Image patch size')
+parser.add_argument('-n', '--num_blocks', type=int, required=False, default=8, help='Number of MLP blocks')
 parser.add_argument('-d', '--hidden_dim', type=int, required=False, default=32, help='Hidden dimension')
 parser.add_argument('-t', '--tokens_mlp_dim', type=int, required=False, default=64, help='Token mixer dimension')
 parser.add_argument('-c', '--channels_mlp_dim', type=int, required=False, default=128, help='Channel mixer dimension')
 parser.add_argument('-l', '--learning_rate', type=float, required=False, default=0.08, help='Learning rate')
+parser.add_argument('-r', '--dropout', type=float, required=False, default=0.5, help='Dropout')
 parser.add_argument('-e', '--epochs', type=int, required=False, default=50, help="Training epochs")
 
 args = parser.parse_args()
 hype = args.hype
 batch_size = args.batch_size
-num_blocks = args.num_blocks
 patch_size = args.patch_size
+num_blocks = args.num_blocks
 hidden_dim = args.hidden_dim
 tokens_mlp_dim = args.tokens_mlp_dim
 channels_mlp_dim = args.channels_mlp_dim
 init_lr = args.learning_rate
+dropout = args.dropout
 epochs = args.epochs
 
 
@@ -58,8 +59,6 @@ if __name__ == "__main__":
         loss_fn = nn.CrossEntropyLoss()
 
         optimizer = torch.optim.SGD(model.parameters(), lr=init_lr)
-        scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=epochs//2,
-                                                                         T_mult=1, eta_min=5e-3)
-        # scheduler = CosineAnnealingWarmUpRestarts(optimizer, T_0=epochs//2, T_mult=1, eta_max=init_lr, T_up=5, gamma=0.5)
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=epochs, T_mult=1, eta_min=1e-4)
 
         train(None, model, train_loader, test_loader, batch_size, loss_fn, optimizer, scheduler, epochs)
