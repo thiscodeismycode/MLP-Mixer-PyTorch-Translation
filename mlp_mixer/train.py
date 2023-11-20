@@ -35,7 +35,8 @@ def train(hypes, model, train_loader, test_loader, batch_size, loss_fn, optimize
     epoch_number = 0
     patience = 0  # For early-stopping
     best_val_loss = 1_000_000.
-    prev_val_loss: float = 0
+    prev_val_loss: float = 0.
+    avg_val_loss: float = 0.
     start_time = time.time()
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
     if flag is True:
@@ -75,7 +76,7 @@ def train(hypes, model, train_loader, test_loader, batch_size, loss_fn, optimize
         avg_acc = running_acc / (i + 1)
         print('LOSS train {0:0.4f} test {1:0.4f}'.format(avg_loss, avg_val_loss))
         print('Test accuracy:', avg_acc)
-        writer.add_scalars('Train vs val loss', {'Train': avg_loss, 'Val': avg_val_loss}, epoch_number + 1)
+        writer.add_scalars('Train vs val loss', {'Val': avg_val_loss}, epoch_number + 1)
         writer.add_scalars('Accuracy', {'Test accuracy': avg_acc}, epoch_number + 1)
         writer.flush()
 
@@ -84,11 +85,11 @@ def train(hypes, model, train_loader, test_loader, batch_size, loss_fn, optimize
             model_path = './models/model_{}_{}'.format(timestamp, epoch_number)
             torch.save(model.state_dict(), model_path)
 
-        if avg_val_loss < prev_val_loss:
+        """if avg_val_loss < prev_val_loss:
             patience = 0
 
         else:
-            patience += 1
+            patience += 1"""
 
         prev_val_loss = avg_val_loss
         epoch_number += 1

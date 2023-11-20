@@ -24,7 +24,7 @@ python3 main.py -b BATCH_SIZE -p PATCH_SIZE -n NUM_BLOCKS -d HIDDEN_DIM -t TOKEN
 
 This will take some time... proportionally to the number of  hyperparameters you are testing with.
 <br> Search result would be saved as `hype_search.yaml`.
-<br>⚠ All cases are tested with only 5 epochs to save time. Results may be incorrect.
+<br>⚠ All cases are tested with only 10 epochs to save time. Results may be incorrect.
 1. Change the given `hyperparameter.yaml` file, or write your own.
 2. Execute training with '-y' or '--hype' and give a positive number as argument input.
 ```
@@ -44,6 +44,7 @@ tensorboard --logdir=runs
 
 ## Citation
 ```
+MLP-Mixer
 @misc{tolstikhin2021mlpmixer,
       title={MLP-Mixer: An all-MLP Architecture for Vision}, 
       author={Ilya Tolstikhin and Neil Houlsby and Alexander Kolesnikov and Lucas Beyer and Xiaohua Zhai and Thomas Unterthiner and Jessica Yung and Daniel Keysers and Jakob Uszkoreit and Mario Lucic and Alexey Dosovitskiy},
@@ -51,6 +52,17 @@ tensorboard --logdir=runs
       eprint={2105.01601},
       archivePrefix={arXiv},
       primaryClass={cs.CV}
+}
+ImageNet-1k
+@article{imagenet15russakovsky,
+    Author = {Olga Russakovsky and Jia Deng and Hao Su and Jonathan Krause and Sanjeev Satheesh and Sean Ma and Zhiheng Huang and Andrej Karpathy and Aditya Khosla and Michael Bernstein and Alexander C. Berg and Li Fei-Fei},
+    Title = { {ImageNet Large Scale Visual Recognition Challenge} },
+    Year = {2015},
+    journal   = {International Journal of Computer Vision (IJCV)},
+    doi = {10.1007/s11263-015-0816-y},
+    volume={115},
+    number={3},
+    pages={211-252}
 }
 ```
 
