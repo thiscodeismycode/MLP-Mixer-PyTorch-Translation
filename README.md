@@ -42,29 +42,6 @@ Execute PyTorch TensorBoard:
 tensorboard --logdir=runs
 ```
 
-## Citation
-```
-MLP-Mixer
-@misc{tolstikhin2021mlpmixer,
-      title={MLP-Mixer: An all-MLP Architecture for Vision}, 
-      author={Ilya Tolstikhin and Neil Houlsby and Alexander Kolesnikov and Lucas Beyer and Xiaohua Zhai and Thomas Unterthiner and Jessica Yung and Daniel Keysers and Jakob Uszkoreit and Mario Lucic and Alexey Dosovitskiy},
-      year={2021},
-      eprint={2105.01601},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
-}
-ImageNet-1k
-@article{imagenet15russakovsky,
-    Author = {Olga Russakovsky and Jia Deng and Hao Su and Jonathan Krause and Sanjeev Satheesh and Sean Ma and Zhiheng Huang and Andrej Karpathy and Aditya Khosla and Michael Bernstein and Alexander C. Berg and Li Fei-Fei},
-    Title = { {ImageNet Large Scale Visual Recognition Challenge} },
-    Year = {2015},
-    journal   = {International Journal of Computer Vision (IJCV)},
-    doi = {10.1007/s11263-015-0816-y},
-    volume={115},
-    number={3},
-    pages={211-252}
-}
-```
 
 ## Acknowledgements
 [@rishikksh20](https://github.com/rishikksh20/MLP-Mixer-pytorch/tree/master)'s PyTorch translation of MLP-Mixer was of great help.
