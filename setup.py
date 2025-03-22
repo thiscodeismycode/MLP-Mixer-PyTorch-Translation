@@ -13,8 +13,8 @@ setup(
         'six>=1.16.0',
         'tensorboard==2.14.0',
         'tensorboard-data-server==0.7.2',
-        'torch==2.1.0',
-        'torchvision==0.16.0',
+        'torch>=2.1.0',
+        'torchvision>=0.16.0',
         'packaging>=23.2'
     ],
     packages=find_packages(where='.'),
